@@ -1,0 +1,250 @@
+/*
+    Theme Name: Custom theme for dolfob.com
+    Theme URI: 
+    Author: ADB Web & Design
+    Author URI: https://adbwebdesing.com
+    Description: Theme for adolfob.com
+    Tags: Portfolio, Blog, Personal Web, FullStack, flexbox
+    Version: 1.0
+    License: GNU General Public License v2 or later
+    License URI: http://www.gnu.org/licenses/gpl-2.0.html
+    Text Domain: adolfob
+*/
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    /** Fonts **/
+    --main-font: "Poppins", sans-serif;
+    --secondary-font: "Open Sans", sans-serif;
+
+    /** colors **/
+    --blue-color: #3c5ba6;
+    --blue-secondary: #1e30f3;
+    --green-color: #4ab8a6;
+    --pink-color: #e8366f;
+    --white-color: #f9fafb;
+    --black-color: #121212;
+    --yellow-color: #ffd700;
+    --gray-color: #EBEBEB;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+    /* 10px = 1rem */
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: var(--main-font);
+    font-size: 1.6rem;
+    line-height: 1.5;
+    background-color: var(--white-color);
+}
+
+/** Headings **/
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--secondary-font);
+    margin: 0 0 5rem 0;
+    line-height: 1.2;
+}
+
+.text-gradient {
+    background: -webkit-linear-gradient(315deg, #1e30f3 0%, #e21e80 100%);
+    -webkit-text-fill-color: transparent;
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+h2 {
+    font-size: 2.8rem;
+}
+
+h3 {
+    font-size: 2rem;
+}
+
+h4 {
+    font-size: 1.8rem;
+}
+
+/** Globals **/
+p {
+    margin: 0px;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+hr {
+    border: 1px solid var(--blue-color);
+}
+
+
+.imagen-destacada {
+    margin-bottom: 3rem;
+}
+
+/** Globals end **/
+
+/** Utilities **/
+
+.text-center {
+    text-align: center;
+}
+
+.text-primary {
+    color: var(--blue-color);
+}
+
+.text-warning {
+    color: var(--yellow-color);
+}
+
+.text-danger {
+    color: var(--pink-color);
+}
+
+.text-success {
+    color: var(--green-color)
+}
+
+.text-white {
+    color: var(--white-color);
+}
+
+.section {
+    padding: 5rem 0;
+}
+
+/** Utilities end **/
+
+.container {
+    width: min(95%, 120rem);
+    margin: 0 auto;
+}
+
+/** Template - Page Center **/
+
+.content-center {
+    width: min(95%, 80rem);
+}
+
+/** Template - Page Center end **/
+
+/** Header **/
+.logo-img {
+    max-width: 70px;
+}
+
+.header {
+    background-color: var(--blue-color);
+    padding: 0rem 0px;
+}
+
+.nav-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 0px;
+}
+
+@media(min-width: 768px) {
+    .nav-bar {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+.main-menu {
+    display: none;
+}
+
+@media(min-width: 768px) {
+    .main-menu {
+        display: block;
+    }
+    .main-menu .menu {
+        display: flex;
+    }
+}
+
+.main-menu a {
+    font-family: var(--secondary-font);
+    display: block;
+    text-align: center;
+    color: var(--white-color);
+    font-size: 2rem;
+    padding: 0.5rem 1rem;
+}
+
+.main-menu .current_page_item {
+    border-bottom: 3px solid var(--yellow-color);
+}
+
+@media(min-width:768px) {
+    .main-menu a {
+        position: relative;
+        z-index: 1;
+    }
+
+}
+
+/** Header end **/
+
+/** Footer menu **/
+.footer .main-menu a {
+    color: var(--black-color);
+    text-align: center;
+
+}
+
+@media (min-width: 768px) {
+    .content-footer {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+@media(min-width: 768px) {
+    .content-center {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.content-footer {
+    padding: 2rem 0;
+}
+
+.copyright {
+    text-align: center;
+    font-size: 1.4rem;
+    font-family: var(--secondary-font);
+    margin: 2rem 0 0 0;
+}
+
+/** Footer menu end **/
