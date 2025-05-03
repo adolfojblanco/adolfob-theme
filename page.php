@@ -5,5 +5,4 @@
   get_template_part('template-parts/page')
   ?>
 </main>
-
 <?php get_footer() ?>

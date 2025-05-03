@@ -3,6 +3,10 @@
 function adolfob_setup(){
   // Habilitar imagenes destacadas
   add_theme_support('post-thumbnails');
+
+  // Titulos para SEO
+  add_theme_support('title-tag');
+
 } 
 
 add_action('after_setup_theme', 'adolfob_setup');

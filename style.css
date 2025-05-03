@@ -103,8 +103,7 @@ hr {
     border: 1px solid var(--blue-color);
 }
 
-
-.imagen-destacada {
+.featured-image {
     margin-bottom: 3rem;
 }
 
@@ -187,6 +186,7 @@ hr {
     .main-menu {
         display: block;
     }
+
     .main-menu .menu {
         display: flex;
     }
@@ -224,13 +224,6 @@ hr {
 
 @media (min-width: 768px) {
     .content-footer {
-        display: flex;
-        justify-content: space-between;
-    }
-}
-
-@media(min-width: 768px) {
-    .content-center {
         display: flex;
         justify-content: space-between;
     }

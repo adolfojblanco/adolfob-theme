@@ -3,6 +3,7 @@
 /**
  * Template Name: Contenido Centrado (No Sidebar)
  */
+
 get_header();
 ?>
 <main class="container section content-center">
