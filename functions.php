@@ -34,3 +34,146 @@ function adolfob_scripts_styles() {
 }
 
 add_action('wp_enqueue_scripts', 'adolfob_scripts_styles');
+
+
+/**
+ * 1. Añadir un Meta Box para el repositorio Git
+ */
+function agregar_metabox_git_clases() {
+  add_meta_box(
+      'metabox_git_clase',                // ID único
+      'Enlace al Repositorio Git',         // Título
+      'mostrar_metabox_git_clase',         // Función que renderiza el contenido
+      'adolfob_proyectos',          // Nombre de tu post type
+      'normal',                            // Contexto
+      'default'                            // Prioridad
+  );
+}
+add_action('add_meta_boxes', 'agregar_metabox_git_clases');
+
+/**
+* 2. Mostrar el campo URL en el Meta Box
+*/
+function mostrar_metabox_git_clase($post) {
+  // Obtener el valor guardado (si existe)
+  $git_url = get_post_meta($post->ID, '_git_url', true);
+  
+  // Nonce para seguridad
+  wp_nonce_field('guardar_metabox_git', 'metabox_git_nonce');
+  
+  // Campo de entrada para la URL
+  echo '<label for="git_url">URL del Repositorio Git (GitHub, GitLab, etc.):</label>';
+  echo '<input type="url" id="git_url" name="git_url" value="' . esc_attr($git_url) . '" style="width:100%;"" />';
+  echo '<p class="description">Ej: https://github.com/tu-usuario/tu-repo</p>';
+}
+
+/**
+* 3. Guardar el valor del campo al actualizar el post
+*/
+function guardar_metabox_git_clase($post_id) {
+  // Verificar nonce y permisos
+  if (!isset($_POST['metabox_git_nonce']) || !wp_verify_nonce($_POST['metabox_git_nonce'], 'guardar_metabox_git')) {
+      return;
+  }
+  
+  if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+  
+  if (!current_user_can('edit_post', $post_id)) return;
+  
+  // Guardar el campo si existe
+  if (isset($_POST['git_url'])) {
+      update_post_meta(
+          $post_id,
+          '_git_url',
+          esc_url_raw($_POST['git_url'])  // Limpia y guarda como URL válida
+      );
+  }
+}
+add_action('save_post', 'guardar_metabox_git_clase');
+
+// Añadir meta box para SEO
+function add_seo_meta_box() {
+  add_meta_box(
+      'seo_meta_box',
+      'Configuración SEO Personalizada',
+      'show_seo_meta_box',
+      'page',
+      'normal',
+      'high'
+  );
+}
+add_action('add_meta_boxes', 'add_seo_meta_box');
+
+// Mostrar los campos en el meta box
+function show_seo_meta_box($post) {
+  wp_nonce_field('save_seo_meta', 'seo_meta_nonce');
+  
+  $meta_title = get_post_meta($post->ID, '_seo_meta_title', true);
+  $meta_description = get_post_meta($post->ID, '_seo_meta_description', true);
+  $meta_keywords = get_post_meta($post->ID, '_seo_meta_keywords', true);
+  
+  echo '<div style="margin-bottom: 15px;">';
+  echo '<label for="seo_meta_title" style="display: block; margin-bottom: 5px; font-weight: bold;">Título SEO:</label>';
+  echo '<input type="text" id="seo_meta_title" name="seo_meta_title" value="'.esc_attr($meta_title).'" style="width: 100%; padding: 8px;">';
+  echo '<p class="description">Máximo 60 caracteres</p>';
+  echo '</div>';
+  
+  echo '<div style="margin-bottom: 15px;">';
+  echo '<label for="seo_meta_description" style="display: block; margin-bottom: 5px; font-weight: bold;">Meta Descripción:</label>';
+  echo '<textarea id="seo_meta_description" name="seo_meta_description" style="width: 100%; padding: 8px; min-height: 80px;">'.esc_textarea($meta_description).'</textarea>';
+  echo '<p class="description">Máximo 160 caracteres</p>';
+  echo '</div>';
+  
+  echo '<div>';
+  echo '<label for="seo_meta_keywords" style="display: block; margin-bottom: 5px; font-weight: bold;">Palabras Clave:</label>';
+  echo '<input type="text" id="seo_meta_keywords" name="seo_meta_keywords" value="'.esc_attr($meta_keywords).'" style="width: 100%; padding: 8px;">';
+  echo '<p class="description">Separadas por comas</p>';
+  echo '</div>';
+}
+
+// Guardar los datos
+function save_seo_meta($post_id) {
+  if (!isset($_POST['seo_meta_nonce']) || !wp_verify_nonce($_POST['seo_meta_nonce'], 'save_seo_meta')) {
+      return;
+  }
+  
+  if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+  
+  if (!current_user_can('edit_post', $post_id)) return;
+  
+  if (isset($_POST['seo_meta_title'])) {
+      update_post_meta($post_id, '_seo_meta_title', sanitize_text_field($_POST['seo_meta_title']));
+  }
+  
+  if (isset($_POST['seo_meta_description'])) {
+      update_post_meta($post_id, '_seo_meta_description', sanitize_textarea_field($_POST['seo_meta_description']));
+  }
+  
+  if (isset($_POST['seo_meta_keywords'])) {
+      update_post_meta($post_id, '_seo_meta_keywords', sanitize_text_field($_POST['seo_meta_keywords']));
+  }
+}
+add_action('save_post', 'save_seo_meta');
+
+// Mostrar en el head
+function add_seo_tags_to_head() {
+  if (is_page()) {
+      global $post;
+      $meta_title = get_post_meta($post->ID, '_seo_meta_title', true);
+      $meta_description = get_post_meta($post->ID, '_seo_meta_description', true);
+      $meta_keywords = get_post_meta($post->ID, '_seo_meta_keywords', true);
+      
+      if ($meta_title) {
+          echo '<meta name="title" content="'.esc_attr($meta_title).'">'."\n";
+      }
+      
+      if ($meta_description) {
+          echo '<meta name="description" content="'.esc_attr($meta_description).'">'."\n";
+      }
+      
+      if ($meta_keywords) {
+          echo '<meta name="keywords" content="'.esc_attr($meta_keywords).'">'."\n";
+      }
+  }
+}
+add_action('wp_head', 'add_seo_tags_to_head');
