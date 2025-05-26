@@ -241,3 +241,50 @@ hr {
 }
 
 /** Footer menu end **/
+
+/** Page projects **/
+
+.grid-list {
+    margin-top: 4rem;
+    display: grid;
+    gap: 2rem;
+}
+
+@media(min-width:768px) {
+    .grid-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.card {
+    background-image: linear-gradient(to bottom, transparent 0, rgb(0 0 0 / 0.7));
+    position: relative;
+}
+
+.card img {
+    display: block;
+    position: relative;
+    z-index: -1;
+    height: 40rem;
+    object-fit: cover;
+}
+
+.card .content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 2rem;
+}
+
+.card .content h3 {
+    font-family: var(--secondary-font);
+    font-size: 3rem;
+    color: var(--white-color);
+    text-transform: uppercase;
+}
+
+.card .content p a {
+    color: var(--white-color);
+}
+
+/** Page projects end **/

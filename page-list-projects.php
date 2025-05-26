@@ -16,7 +16,15 @@ get_header();
     while ($projects->have_posts()) {
       $projects->the_post();
     ?>
-      <li class="card"><?php the_title() ?> </li>
+      <li class="card">
+        <?php the_post_thumbnail(); ?>
+        <div class="content">
+          <a href="<?php the_permalink(); ?>">
+            <h3><?php the_title() ?></h3>
+          </a>
+
+        </div>
+      </li>
     <?php }
     wp_reset_postdata()
     ?>
